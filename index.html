@@ -1,611 +1,788 @@
 <!DOCTYPE html>
-<html lang="ur" dir="ltr">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>💍 Hamari Shadi Ka Countdown 💍</title>
+  <title>The Final Day — Wedding Countdown</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Cinzel:wght@400;600;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --gold: #d4a843;
-      --gold-light: #f0c96b;
-      --rose: #c2185b;
-      --rose-light: #e91e8c;
-      --cream: #fff8f0;
-      --deep: #1a0a0f;
-      --text-light: #ffecd2;
+      --gold:       #c9952a;
+      --gold-lt:    #e8c06a;
+      --gold-pale:  #f5dfa0;
+      --rose:       #b5294e;
+      --rose-lt:    #e05578;
+      --navy:       #0b0c18;
+      --navy2:      #111228;
+      --glass:      rgba(255,255,255,0.04);
+      --glass-b:    rgba(201,149,42,0.22);
+      --text:       #f5e6cc;
+      --text-dim:   rgba(245,230,204,0.55);
     }
 
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: var(--deep);
-      color: var(--text-light);
+    html, body {
       min-height: 100vh;
+      background: var(--navy);
+      color: var(--text);
+      font-family: 'Lato', sans-serif;
       overflow-x: hidden;
-      position: relative;
     }
 
-    .bg-overlay {
-      position: fixed;
-      inset: 0;
+    /* ── Background layers ── */
+    .bg {
+      position: fixed; inset: 0; z-index: 0;
       background:
-        radial-gradient(ellipse at 20% 50%, rgba(194,24,91,0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 20%, rgba(212,168,67,0.12) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 80%, rgba(194,24,91,0.1) 0%, transparent 50%),
-        linear-gradient(135deg, #1a0a0f 0%, #2d0f1e 40%, #1a0a0f 100%);
-      z-index: 0;
+        radial-gradient(ellipse 70% 60% at 15% 30%, rgba(181,41,78,0.13) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 50% at 85% 70%, rgba(201,149,42,0.10) 0%, transparent 70%),
+        radial-gradient(ellipse 80% 80% at 50% 50%, rgba(17,18,40,0.9) 0%, transparent 100%),
+        linear-gradient(160deg, #0b0c18 0%, #15102a 50%, #0b0c18 100%);
     }
 
-    .hearts-container {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 1;
-      overflow: hidden;
-    }
-
-    .heart {
-      position: absolute;
-      bottom: -50px;
-      animation: floatUp linear infinite;
-      opacity: 0;
-    }
-
-    @keyframes floatUp {
-      0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
-      10%  { opacity: 0.6; }
-      90%  { opacity: 0.3; }
-      100% { transform: translateY(-110vh) rotate(720deg); opacity: 0; }
-    }
-
-    .sparkle {
-      position: fixed;
-      background: var(--gold-light);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 1;
-      animation: sparkleAnim 3s ease-in-out infinite;
-    }
-
-    @keyframes sparkleAnim {
-      0%, 100% { opacity: 0; transform: scale(0); }
-      50%       { opacity: 1; transform: scale(1); }
-    }
-
-    .wrapper {
-      position: relative;
-      z-index: 2;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px 16px 40px;
-    }
-
-    .header {
+    /* Ornament grid lines */
+    /* ── Bismillah ── */
+    .bismillah-wrap {
       text-align: center;
-      margin-bottom: 30px;
-      animation: fadeDown 1s ease forwards;
+      margin-bottom: 14px;
+      opacity: 0;
+      animation: fadeSlideDown 1.2s 0s ease forwards;
+    }
+    .bismillah-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 3.5vw, 1.6rem);
+      letter-spacing: 3px;
+      background: linear-gradient(135deg, var(--gold-pale), var(--gold-lt), var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 12px rgba(201,149,42,0.5));
+    }
+    .bismillah-line {
+      display: flex; align-items: center; gap: 12px;
+      justify-content: center; margin-top: 6px;
+    }
+    .b-line {
+      height: 1px; width: 40px;
+      background: linear-gradient(90deg, transparent, rgba(201,149,42,0.5));
+    }
+    .b-line.r { background: linear-gradient(90deg, rgba(201,149,42,0.5), transparent); }
+    .b-dot { color: var(--gold); font-size: 0.5rem; }
+
+    .bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(201,149,42,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,149,42,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
     }
 
-    @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-30px); }
-      to   { opacity: 1; transform: translateY(0); }
+    /* ── Canvas for petals + particles ── */
+    #canvas {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 1;
     }
 
-    .bismillah {
-      font-family: 'Dancing Script', cursive;
-      font-size: clamp(1rem, 3vw, 1.4rem);
+    /* ── Page wrapper ── */
+    .page {
+      position: relative; z-index: 2;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 60px;
+    }
+
+    /* ── TOP ORNAMENT ── */
+    .top-ornament {
+      display: flex; align-items: center; gap: 16px;
+      margin-bottom: 10px;
+      opacity: 0;
+      animation: fadeSlideDown 1s 0.2s ease forwards;
+    }
+    .orn-line {
+      height: 1px; width: 70px;
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+    .orn-line.r { background: linear-gradient(90deg, var(--gold), transparent); }
+    .orn-icon { color: var(--gold); font-size: 1rem; letter-spacing: 4px; }
+
+    /* ── MAIN TITLE ── */
+    .main-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 12vw, 7rem);
+      font-weight: 700;
+      font-style: italic;
+      line-height: 1;
+      text-align: center;
+      background: linear-gradient(160deg, var(--gold-pale) 0%, var(--gold-lt) 40%, var(--gold) 70%, #a07020 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 40px rgba(201,149,42,0.35));
+      opacity: 0;
+      animation: fadeSlideDown 1.1s 0.4s ease forwards;
+    }
+
+    .subtitle-row {
+      display: flex; align-items: center; gap: 14px;
+      margin: 14px 0 6px;
+      opacity: 0;
+      animation: fadeSlideDown 1s 0.7s ease forwards;
+    }
+    .sub-line {
+      height: 1px; width: 50px;
+      background: linear-gradient(90deg, transparent, rgba(201,149,42,0.5));
+    }
+    .sub-line.r { background: linear-gradient(90deg, rgba(201,149,42,0.5), transparent); }
+    .rings-icon { color: var(--gold); font-size: 1.4rem; }
+
+    .event-label {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.7rem, 2.5vw, 0.95rem);
+      letter-spacing: 5px;
+      color: var(--gold-lt);
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeSlideDown 1s 0.9s ease forwards;
+    }
+
+    .date-pill {
+      background: rgba(201,149,42,0.1);
+      border: 1px solid rgba(201,149,42,0.3);
+      border-radius: 50px;
+      padding: 9px 28px;
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.75rem, 2.5vw, 0.95rem);
+      letter-spacing: 3px;
+      color: var(--gold-lt);
+      margin: 18px 0 14px;
+      backdrop-filter: blur(12px);
+      opacity: 0;
+      animation: fadeSlideDown 1s 1.1s ease forwards;
+    }
+
+    /* ── TODAY BADGE ── */
+    .today-badge {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      letter-spacing: 1.5px;
+      margin-bottom: 44px;
+      opacity: 0;
+      animation: fadeIn 1.5s 1.4s ease forwards;
+    }
+
+    /* ── CIRCULAR RINGS GRID ── */
+    .rings-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      width: 100%;
+      max-width: 560px;
+      opacity: 0;
+      animation: fadeSlideUp 1.1s 1.2s ease forwards;
+    }
+
+    @media (min-width: 600px) {
+      .rings-grid { grid-template-columns: repeat(4, 1fr); max-width: 760px; }
+    }
+
+    .ring-card {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      aspect-ratio: 1;
+      position: relative;
+      cursor: default;
+    }
+
+    .ring-card svg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      transform: rotate(-90deg);
+    }
+
+    .ring-bg   { fill: none; stroke: rgba(255,255,255,0.05); }
+    .ring-track { fill: none; stroke-linecap: round; transition: stroke-dashoffset 1s ease; }
+
+    .ring-inner {
+      position: relative; z-index: 2;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .ring-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 8vw, 3.6rem);
+      font-weight: 600;
+      line-height: 1;
+      background: linear-gradient(180deg, #ffffff 0%, var(--gold-lt) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: block;
+      transition: all 0.3s ease;
+    }
+
+    .ring-label {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.5rem, 1.8vw, 0.65rem);
+      letter-spacing: 3px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-top: 4px;
+      display: block;
+    }
+
+    /* Glow backgrounds per card */
+    .ring-card::before {
+      content: ''; position: absolute; inset: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, rgba(201,149,42,0.06) 0%, transparent 70%);
+    }
+
+    .ring-card.sec .ring-num { animation: secPulse 1s ease-in-out infinite; }
+    @keyframes secPulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.65; }
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      display: flex; align-items: center; gap: 20px;
+      width: 100%; max-width: 560px;
+      margin: 40px 0 32px;
+      opacity: 0;
+      animation: fadeIn 1s 1.8s ease forwards;
+    }
+    .div-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,149,42,0.4), transparent); }
+    .div-icon { color: var(--gold); font-size: 1.1rem; }
+
+    /* ── LOVE QUOTE CARD ── */
+    .quote-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-b);
+      border-radius: 28px;
+      padding: 36px 32px;
+      max-width: 560px;
+      width: 100%;
+      text-align: center;
+      backdrop-filter: blur(24px);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeSlideUp 1s 2s ease forwards;
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(255,255,255,0.07);
+    }
+
+    .quote-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold-lt), transparent);
+    }
+
+    .quote-card::after {
+      content: '\201C';
+      position: absolute;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 12rem;
+      color: rgba(201,149,42,0.04);
+      top: -30px; left: 10px;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .quote-top {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 4px;
       color: var(--gold);
-      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .quote-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 3.5vw, 1.45rem);
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.85;
+    }
+
+    .quote-text strong {
+      font-style: normal; font-weight: 600;
+      color: var(--gold-lt);
+    }
+
+    .quote-sig {
+      margin-top: 22px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 3px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+
+    /* ── PROGRESS ── */
+    .progress-wrap {
+      max-width: 560px; width: 100%;
+      margin-top: 28px;
+      opacity: 0;
+      animation: fadeIn 1s 2.4s ease forwards;
+    }
+
+    .progress-labels {
+      display: flex; justify-content: space-between;
+      font-size: 0.7rem;
+      letter-spacing: 1.5px;
+      color: var(--text-dim);
       margin-bottom: 8px;
     }
 
-    .main-title {
-      font-family: 'Dancing Script', cursive;
-      font-size: clamp(2.5rem, 8vw, 5rem);
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--gold-light), var(--gold), #e8b84b);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      line-height: 1.1;
-      filter: drop-shadow(0 0 20px rgba(212,168,67,0.4));
-    }
-
-    .subtitle {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1rem, 3vw, 1.3rem);
-      color: rgba(255,236,210,0.7);
-      margin-top: 8px;
-      font-style: italic;
-    }
-
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin: 16px auto;
-      width: fit-content;
-    }
-    .divider-line {
-      width: 80px; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    }
-    .divider-icon { color: var(--gold); font-size: 1.2rem; }
-
-    .today-badge {
-      background: rgba(212,168,67,0.1);
-      border: 1px solid rgba(212,168,67,0.3);
-      border-radius: 50px;
-      padding: 8px 24px;
-      font-size: 0.85rem;
-      color: var(--gold-light);
-      margin-bottom: 30px;
-      backdrop-filter: blur(10px);
-      animation: fadeIn 1.5s ease forwards;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; } to { opacity: 1; }
-    }
-
-    .events-container {
-      display: flex;
-      flex-direction: column;
-      gap: 30px;
-      width: 100%;
-      max-width: 750px;
-    }
-
-    .event-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(212,168,67,0.25);
-      border-radius: 24px;
-      padding: 28px 24px 24px;
-      backdrop-filter: blur(20px);
-      position: relative;
-      overflow: hidden;
-      animation: slideUp 1s ease forwards;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06);
-    }
-
-    .event-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-    }
-
-    .event-card.mehndi::before {
-      background: linear-gradient(90deg, transparent, #27ae60, transparent);
-    }
-
-    .event-card.barat::before {
-      background: linear-gradient(90deg, transparent, var(--rose-light), transparent);
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(40px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .event-card:nth-child(2) { animation-delay: 0.3s; opacity: 0; }
-
-    .event-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .event-title-group { display: flex; align-items: center; gap: 12px; }
-
-    .event-emoji { font-size: 2rem; }
-
-    .event-name {
-      font-family: 'Dancing Script', cursive;
-      font-size: clamp(1.6rem, 5vw, 2.2rem);
-      font-weight: 700;
-    }
-
-    .event-card.mehndi .event-name { color: #5dde8a; }
-    .event-card.barat .event-name {
-      background: linear-gradient(135deg, var(--rose-light), var(--gold));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .event-date-badge {
-      background: rgba(212,168,67,0.15);
-      border: 1px solid rgba(212,168,67,0.3);
-      border-radius: 12px;
-      padding: 6px 14px;
-      font-size: 0.8rem;
-      color: var(--gold-light);
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    .timer-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-    }
-
-    .timer-block {
-      background: rgba(0,0,0,0.3);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 16px;
-      padding: 16px 8px 12px;
-      text-align: center;
-      transition: transform 0.3s ease;
-    }
-
-    .timer-block:hover { transform: translateY(-4px); }
-
-    .timer-block .num {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 6vw, 3.2rem);
-      font-weight: 700;
-      line-height: 1;
-      background: linear-gradient(180deg, #ffffff 0%, var(--gold-light) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      display: block;
-    }
-
-    .timer-block .label {
-      font-size: clamp(0.6rem, 2vw, 0.75rem);
-      color: rgba(255,236,210,0.5);
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-top: 4px;
-      font-weight: 600;
-      display: block;
-    }
-
-    .timer-block.seconds .num {
-      animation: pulseFade 1s ease-in-out infinite;
-    }
-    @keyframes pulseFade {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.6; }
-    }
-
-    .event-card.celebrate {
-      animation: celebrateGlow 1s ease-in-out infinite alternate;
-    }
-    @keyframes celebrateGlow {
-      from { box-shadow: 0 0 20px rgba(212,168,67,0.2); }
-      to   { box-shadow: 0 0 60px rgba(212,168,67,0.5); }
-    }
-
-    .celebrate-msg {
-      display: none;
-      text-align: center;
-      font-family: 'Dancing Script', cursive;
-      font-size: 2rem;
-      color: var(--gold);
-      padding: 20px;
-      animation: bounceScale 0.6s ease infinite alternate;
-    }
-    @keyframes bounceScale {
-      from { transform: scale(1); }
-      to   { transform: scale(1.05); }
-    }
-
-    .love-note {
-      max-width: 750px;
-      width: 100%;
-      margin-top: 30px;
-      background: rgba(194,24,91,0.08);
-      border: 1px solid rgba(194,24,91,0.25);
-      border-radius: 24px;
-      padding: 28px 24px;
-      text-align: center;
-      backdrop-filter: blur(20px);
-      animation: fadeIn 2s ease forwards;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .love-note::after {
-      content: 'u2665';
-      position: absolute;
-      font-size: 8rem;
-      color: rgba(194,24,91,0.05);
-      right: -10px; bottom: -20px;
-      font-family: sans-serif;
-    }
-
-    .love-note-title {
-      font-family: 'Dancing Script', cursive;
-      font-size: clamp(1.4rem, 4vw, 1.8rem);
-      color: var(--rose-light);
-      margin-bottom: 12px;
-    }
-
-    .love-note p {
-      font-size: clamp(0.85rem, 2.5vw, 1rem);
-      color: rgba(255,236,210,0.8);
-      line-height: 1.8;
-      font-style: italic;
-    }
-
-    .progress-section { margin-top: 18px; }
-
-    .progress-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.75rem;
-      color: rgba(255,236,210,0.5);
-      margin-bottom: 6px;
-    }
-
-    .progress-bar-bg {
-      height: 6px;
+    .prog-bg {
+      height: 5px;
       background: rgba(255,255,255,0.06);
       border-radius: 10px;
       overflow: hidden;
     }
 
-    .progress-bar-fill {
+    .prog-fill {
       height: 100%;
+      background: linear-gradient(90deg, var(--rose), var(--gold-lt), var(--gold));
       border-radius: 10px;
-      background: linear-gradient(90deg, var(--rose), var(--gold));
-      transition: width 1s ease;
+      transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 0 12px rgba(201,149,42,0.4);
     }
 
-    .event-card.mehndi .progress-bar-fill {
-      background: linear-gradient(90deg, #1a7a3a, #5dde8a);
+    .prog-pct {
+      text-align: right;
+      font-size: 0.68rem;
+      color: var(--gold);
+      letter-spacing: 1px;
+      margin-top: 6px;
+      font-family: 'Cinzel', serif;
     }
 
+    /* ── FOOTER ── */
     .footer {
-      margin-top: 40px;
+      margin-top: 50px;
       text-align: center;
-      font-size: 0.75rem;
-      color: rgba(255,236,210,0.3);
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+      color: rgba(245,230,204,0.2);
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeIn 2s 2.8s ease forwards;
+    }
+    .footer span { color: var(--rose-lt); }
+
+    /* ── CELEBRATION MODE ── */
+    .celebrate-overlay {
+      display: none;
+      position: fixed; inset: 0; z-index: 100;
+      background: rgba(0,0,0,0.85);
+      align-items: center; justify-content: center; flex-direction: column;
+      text-align: center;
+    }
+    .celebrate-overlay.active { display: flex; }
+    .celebrate-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 10vw, 6rem);
+      font-weight: 700; font-style: italic;
+      background: linear-gradient(135deg, var(--gold-pale), var(--gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: celebPulse 1.5s ease-in-out infinite;
+    }
+    @keyframes celebPulse {
+      0%, 100% { filter: drop-shadow(0 0 20px rgba(201,149,42,0.5)); }
+      50%       { filter: drop-shadow(0 0 60px rgba(201,149,42,0.9)); }
+    }
+    .celebrate-sub {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem; letter-spacing: 5px;
+      color: var(--text); margin-top: 20px;
     }
 
-    .footer span { color: var(--rose-light); }
+    /* ── KEYFRAMES ── */
+    @keyframes fadeSlideDown {
+      from { opacity: 0; transform: translateY(-24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
 
-    @media (max-width: 420px) {
-      .timer-grid { gap: 8px; }
-      .timer-block { padding: 12px 4px 10px; }
-      .event-card { padding: 20px 14px 18px; }
+    /* ── RESPONSIVE ── */
+    @media (max-width: 380px) {
+      .rings-grid { gap: 14px; }
+      .quote-card { padding: 24px 18px; }
     }
   </style>
 </head>
 <body>
 
-  <div class="bg-overlay"></div>
-  <div class="hearts-container" id="heartsContainer"></div>
+<div class="bg"></div>
+<canvas id="canvas"></canvas>
 
-  <div class="wrapper">
+<!-- Celebration Overlay -->
+<div class="celebrate-overlay" id="celebOverlay">
+  <div class="celebrate-title">Barat Mubarak!</div>
+  <div class="celebrate-sub">&#128141; The Day Has Finally Arrived &#128141;</div>
+</div>
 
-    <div class="header">
-      <div class="bismillah">&#10024; بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ &#10024;</div>
-      <div class="main-title">Hamari Shadi</div>
-      <div class="subtitle">&#128141; A New Beautiful Chapter Begins &#128141;</div>
-      <div class="divider">
-        <div class="divider-line"></div>
-        <div class="divider-icon">&#10048;</div>
-        <div class="divider-line"></div>
-      </div>
+<div class="page">
+
+  <!-- Bismillah -->
+  <div class="bismillah-wrap">
+    <div class="bismillah-text">&#x202B;بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ&#x202C;</div>
+    <div class="bismillah-line">
+      <div class="b-line"></div>
+      <div class="b-dot">&#9830;</div>
+      <div class="b-dot">&#9830;</div>
+      <div class="b-dot">&#9830;</div>
+      <div class="b-line r"></div>
     </div>
-
-    <div class="today-badge" id="todayBadge">&#128197; Aaj Ki Date: Loading...</div>
-
-    <div class="events-container">
-
-      <!-- Mehndi Card -->
-      <div class="event-card mehndi" id="mehndiCard">
-        <div class="event-header">
-          <div class="event-title-group">
-            <div class="event-emoji">&#127807;</div>
-            <div class="event-name">Mehndi</div>
-          </div>
-          <div class="event-date-badge">25 October 2026 &#127807;</div>
-        </div>
-        <div class="timer-grid">
-          <div class="timer-block">
-            <span class="num" id="m-days">00</span>
-            <span class="label">Din / Days</span>
-          </div>
-          <div class="timer-block">
-            <span class="num" id="m-hours">00</span>
-            <span class="label">Ghante / Hours</span>
-          </div>
-          <div class="timer-block">
-            <span class="num" id="m-mins">00</span>
-            <span class="label">Minute</span>
-          </div>
-          <div class="timer-block seconds">
-            <span class="num" id="m-secs">00</span>
-            <span class="label">Second</span>
-          </div>
-        </div>
-        <div class="celebrate-msg" id="mehndiCelebrate">&#127807; Mehndi Mubarak Ho! &#127807;</div>
-        <div class="progress-section">
-          <div class="progress-label">
-            <span>Aaj (21 Sep)</span>
-            <span>Mehndi &#127807;</span>
-          </div>
-          <div class="progress-bar-bg">
-            <div class="progress-bar-fill" id="mehndiProgress" style="width:0%"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Barat Card -->
-      <div class="event-card barat" id="baratCard">
-        <div class="event-header">
-          <div class="event-title-group">
-            <div class="event-emoji">&#128146;</div>
-            <div class="event-name">Barat</div>
-          </div>
-          <div class="event-date-badge">26 October 2026 &#128146;</div>
-        </div>
-        <div class="timer-grid">
-          <div class="timer-block">
-            <span class="num" id="b-days">00</span>
-            <span class="label">Din / Days</span>
-          </div>
-          <div class="timer-block">
-            <span class="num" id="b-hours">00</span>
-            <span class="label">Ghante / Hours</span>
-          </div>
-          <div class="timer-block">
-            <span class="num" id="b-mins">00</span>
-            <span class="label">Minute</span>
-          </div>
-          <div class="timer-block seconds">
-            <span class="num" id="b-secs">00</span>
-            <span class="label">Second</span>
-          </div>
-        </div>
-        <div class="celebrate-msg" id="baratCelebrate">&#128146; Barat Mubarak Ho! &#128141;</div>
-        <div class="progress-section">
-          <div class="progress-label">
-            <span>Aaj (21 Sep)</span>
-            <span>Barat &#128146;</span>
-          </div>
-          <div class="progress-bar-bg">
-            <div class="progress-bar-fill" id="baratProgress" style="width:0%"></div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Love Note -->
-    <div class="love-note">
-      <div class="love-note-title">&#128140; Meri Jaan ke liye...</div>
-      <p>
-        Yeh countdown sirf din nahi ginta,<br>
-        yeh meri dhadkan hai jo teri raah dekh rahi hai.<br><br>
-        <strong style="color:var(--gold-light)">Har lamha teri yaad mein guzarta hai,</strong><br>
-        aur jab yeh timer zero ho jaye —<br>
-        tab main tumhara, aur tum meri ho jaogi... hamesha ke liye. &#128141;
-      </p>
-    </div>
-
-    <div class="footer">
-      Made with <span>&#9829;</span> sirf tumhare liye &nbsp;|&nbsp; Tumhara apna &#128141;
-    </div>
-
   </div>
 
-  <script>
-    // ==============================================
-    // DATES — Yahan change karo agar zaroorat ho
-    // ==============================================
-    const MEHNDI_DATE = new Date('2026-10-25T18:00:00'); // 25 Oct 2026, 6 PM
-    const BARAT_DATE  = new Date('2026-10-26T12:00:00'); // 26 Oct 2026, 12 PM
-    const START_DATE  = new Date('2026-09-21T00:00:00'); // Aaj se
-    // ==============================================
+  <!-- Top ornament -->
+  <div class="top-ornament">
+    <div class="orn-line"></div>
+    <div class="orn-icon">&#10022; &#128141; &#10022;</div>
+    <div class="orn-line r"></div>
+  </div>
 
-    const dayNames = ['Itwar','Somwar','Mangal','Budh','Jumerat','Juma','Hafta'];
-    const monthNames = ['January','February','March','April','May','June',
-                        'July','August','September','October','November','December'];
+  <!-- Title -->
+  <h1 class="main-title">The Final Day</h1>
 
-    function updateTodayBadge() {
-      const now = new Date();
-      document.getElementById('todayBadge').textContent =
-        '\uD83D\uDCC5 Aaj: ' + dayNames[now.getDay()] + ', ' +
-        now.getDate() + ' ' + monthNames[now.getMonth()] + ' ' + now.getFullYear();
+  <!-- Subtitle row -->
+  <div class="subtitle-row">
+    <div class="sub-line"></div>
+    <div class="rings-icon">&#128141;</div>
+    <div class="sub-line r"></div>
+  </div>
+
+  <div class="event-label">Barat Ceremony &nbsp;&#183;&nbsp; October 26, 2026</div>
+
+  <!-- Date pill -->
+  <div class="date-pill">&#128197;&nbsp; Sunday, 26 October 2026</div>
+
+  <!-- Today -->
+  <div class="today-badge" id="todayBadge">Today: Loading...</div>
+
+  <!-- Circular ring timers -->
+  <div class="rings-grid" id="ringsGrid">
+
+    <!-- Days -->
+    <div class="ring-card" id="card-days">
+      <svg viewBox="0 0 120 120">
+        <circle class="ring-bg"    cx="60" cy="60" r="52" stroke-width="6"/>
+        <circle class="ring-track" cx="60" cy="60" r="52" stroke-width="6"
+                stroke="url(#gradDays)" id="ring-days"
+                stroke-dasharray="326.73" stroke-dashoffset="326.73"/>
+        <defs>
+          <linearGradient id="gradDays" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="#e8c06a"/>
+            <stop offset="100%" stop-color="#c9952a"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div class="ring-inner">
+        <span class="ring-num" id="num-days">00</span>
+        <span class="ring-label">Days</span>
+      </div>
+    </div>
+
+    <!-- Hours -->
+    <div class="ring-card" id="card-hours">
+      <svg viewBox="0 0 120 120">
+        <circle class="ring-bg"    cx="60" cy="60" r="52" stroke-width="6"/>
+        <circle class="ring-track" cx="60" cy="60" r="52" stroke-width="6"
+                stroke="url(#gradHours)" id="ring-hours"
+                stroke-dasharray="326.73" stroke-dashoffset="326.73"/>
+        <defs>
+          <linearGradient id="gradHours" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="#e05578"/>
+            <stop offset="100%" stop-color="#b5294e"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div class="ring-inner">
+        <span class="ring-num" id="num-hours">00</span>
+        <span class="ring-label">Hours</span>
+      </div>
+    </div>
+
+    <!-- Minutes -->
+    <div class="ring-card" id="card-mins">
+      <svg viewBox="0 0 120 120">
+        <circle class="ring-bg"    cx="60" cy="60" r="52" stroke-width="6"/>
+        <circle class="ring-track" cx="60" cy="60" r="52" stroke-width="6"
+                stroke="url(#gradMins)" id="ring-mins"
+                stroke-dasharray="326.73" stroke-dashoffset="326.73"/>
+        <defs>
+          <linearGradient id="gradMins" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="#f5dfa0"/>
+            <stop offset="100%" stop-color="#c9952a"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div class="ring-inner">
+        <span class="ring-num" id="num-mins">00</span>
+        <span class="ring-label">Minutes</span>
+      </div>
+    </div>
+
+    <!-- Seconds -->
+    <div class="ring-card sec" id="card-secs">
+      <svg viewBox="0 0 120 120">
+        <circle class="ring-bg"    cx="60" cy="60" r="52" stroke-width="6"/>
+        <circle class="ring-track" cx="60" cy="60" r="52" stroke-width="6"
+                stroke="url(#gradSecs)" id="ring-secs"
+                stroke-dasharray="326.73" stroke-dashoffset="326.73"/>
+        <defs>
+          <linearGradient id="gradSecs" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="#a0c4ff"/>
+            <stop offset="100%" stop-color="#7b9fff"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div class="ring-inner">
+        <span class="ring-num" id="num-secs">00</span>
+        <span class="ring-label">Seconds</span>
+      </div>
+    </div>
+
+  </div><!-- /rings-grid -->
+
+  <!-- Divider -->
+  <div class="divider">
+    <div class="div-line"></div>
+    <div class="div-icon">&#10022;</div>
+    <div class="div-line"></div>
+  </div>
+
+  <!-- Quote Card -->
+  <div class="quote-card">
+    <div class="quote-top">&#128140; &nbsp; A Message For You &nbsp; &#128140;</div>
+    <p class="quote-text">
+      Every second on this timer<br>
+      is a heartbeat closer to you.<br><br>
+      <strong>The day I call you mine forever</strong><br>
+      is the most beautiful day<br>
+      this world has ever seen.
+    </p>
+    <div class="quote-sig">— Yours, Always &amp; Forever &#128141;</div>
+  </div>
+
+  <!-- Progress bar -->
+  <div class="progress-wrap">
+    <div class="progress-labels">
+      <span>September 21, 2026</span>
+      <span>Barat — October 26, 2026</span>
+    </div>
+    <div class="prog-bg">
+      <div class="prog-fill" id="progFill" style="width:0%"></div>
+    </div>
+    <div class="prog-pct" id="progPct">0% complete</div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    Crafted with <span>&#9829;</span> &nbsp;|&nbsp; For You, Always
+  </div>
+
+</div><!-- /page -->
+
+<script>
+  // ========================================
+  //  CONFIG
+  // ========================================
+  var BARAT   = new Date('2026-10-26T12:00:00');
+  var START   = new Date('2026-09-21T00:00:00');
+  var CIRC    = 2 * Math.PI * 52; // 326.73
+  var DAYS_MAX  = 365;
+  var HOURS_MAX = 24;
+  var MINS_MAX  = 60;
+  var SECS_MAX  = 60;
+
+  // ========================================
+  //  DAY NAMES & MONTHS
+  // ========================================
+  var DAYS   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var MONTHS = ['January','February','March','April','May','June',
+                'July','August','September','October','November','December'];
+
+  function pad(n) { return String(Math.max(0, Math.floor(n))).padStart(2, '0'); }
+
+  // ========================================
+  //  RING UPDATER
+  // ========================================
+  function setRing(id, value, max) {
+    var el   = document.getElementById('ring-' + id);
+    var frac = Math.min(1, Math.max(0, value / max));
+    var offset = CIRC * (1 - frac);
+    el.style.strokeDashoffset = offset;
+  }
+
+  // ========================================
+  //  MAIN TICK
+  // ========================================
+  function tick() {
+    var now  = new Date();
+    var diff = BARAT - now;
+
+    // Today badge
+    document.getElementById('todayBadge').textContent =
+      'Today: ' + DAYS[now.getDay()] + ', ' +
+      now.getDate() + ' ' + MONTHS[now.getMonth()] + ' ' + now.getFullYear();
+
+    if (diff <= 0) {
+      // Celebration!
+      document.getElementById('celebOverlay').classList.add('active');
+      document.getElementById('num-days').textContent  = '00';
+      document.getElementById('num-hours').textContent = '00';
+      document.getElementById('num-mins').textContent  = '00';
+      document.getElementById('num-secs').textContent  = '00';
+      document.getElementById('progFill').style.width  = '100%';
+      document.getElementById('progPct').textContent   = '100% complete';
+      return;
     }
 
-    function pad(n) { return String(Math.max(0, Math.floor(n))).padStart(2, '0'); }
+    var days    = Math.floor(diff / 86400000);
+    var hours   = Math.floor((diff % 86400000) / 3600000);
+    var minutes = Math.floor((diff % 3600000)  / 60000);
+    var seconds = Math.floor((diff % 60000)    / 1000);
 
-    function getCountdown(target) {
-      var diff = target - new Date();
-      if (diff <= 0) return null;
-      return {
-        days:    Math.floor(diff / 86400000),
-        hours:   Math.floor((diff % 86400000) / 3600000),
-        minutes: Math.floor((diff % 3600000)  / 60000),
-        seconds: Math.floor((diff % 60000)    / 1000)
-      };
-    }
+    document.getElementById('num-days').textContent  = pad(days);
+    document.getElementById('num-hours').textContent = pad(hours);
+    document.getElementById('num-mins').textContent  = pad(minutes);
+    document.getElementById('num-secs').textContent  = pad(seconds);
 
-    function getProgress(start, target) {
-      var now = new Date();
-      var total = target - start;
-      var elapsed = now - start;
-      return Math.min(100, Math.max(0, (elapsed / total) * 100));
-    }
+    setRing('days',  days,    DAYS_MAX);
+    setRing('hours', hours,   HOURS_MAX);
+    setRing('mins',  minutes, MINS_MAX);
+    setRing('secs',  seconds, SECS_MAX);
 
-    function updateCard(prefix, cardId, celebrateId, progressId, targetDate) {
-      var remaining = getCountdown(targetDate);
-      if (!remaining) {
-        document.getElementById(cardId).classList.add('celebrate');
-        document.getElementById(prefix + '-days').textContent  = '00';
-        document.getElementById(prefix + '-hours').textContent = '00';
-        document.getElementById(prefix + '-mins').textContent  = '00';
-        document.getElementById(prefix + '-secs').textContent  = '00';
-        document.getElementById(celebrateId).style.display = 'block';
-        document.getElementById(progressId).style.width = '100%';
-      } else {
-        document.getElementById(prefix + '-days').textContent  = pad(remaining.days);
-        document.getElementById(prefix + '-hours').textContent = pad(remaining.hours);
-        document.getElementById(prefix + '-mins').textContent  = pad(remaining.minutes);
-        document.getElementById(prefix + '-secs').textContent  = pad(remaining.seconds);
-        document.getElementById(progressId).style.width =
-          getProgress(START_DATE, targetDate).toFixed(1) + '%';
-      }
-    }
+    // Progress
+    var total   = BARAT - START;
+    var elapsed = now - START;
+    var pct     = Math.min(100, Math.max(0, (elapsed / total) * 100));
+    document.getElementById('progFill').style.width = pct.toFixed(2) + '%';
+    document.getElementById('progPct').textContent  = pct.toFixed(1) + '% of the journey complete';
+  }
 
-    function tick() {
-      updateTodayBadge();
-      updateCard('m', 'mehndiCard', 'mehndiCelebrate', 'mehndiProgress', MEHNDI_DATE);
-      updateCard('b', 'baratCard',  'baratCelebrate',  'baratProgress',  BARAT_DATE);
-    }
+  tick();
+  setInterval(tick, 1000);
 
-    tick();
-    setInterval(tick, 1000);
+  // ========================================
+  //  CANVAS — PETALS + PARTICLES
+  // ========================================
+  var canvas = document.getElementById('canvas');
+  var ctx    = canvas.getContext('2d');
 
-    // Floating hearts
-    var emojis = ['\u2764\uFE0F','\uD83D\uDC95','\uD83D\uDC8D','\uD83C\uDF39','\u2728','\uD83D\uDC96','\uD83C\uDF38','\uD83D\uDCAB'];
-    var hc = document.getElementById('heartsContainer');
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
 
-    function spawnHeart() {
-      var el = document.createElement('div');
-      el.className = 'heart';
-      el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-      el.style.left = (Math.random() * 100) + 'vw';
-      var dur = 6 + Math.random() * 8;
-      el.style.animationDuration = dur + 's';
-      el.style.animationDelay = (Math.random() * 2) + 's';
-      el.style.fontSize = (0.8 + Math.random() * 1.4) + 'rem';
-      hc.appendChild(el);
-      setTimeout(function() { if (el.parentNode) el.parentNode.removeChild(el); }, (dur + 3) * 1000);
-    }
+  // Petal class
+  function Petal() { this.reset(true); }
+  Petal.prototype.reset = function(initial) {
+    this.x    = Math.random() * canvas.width;
+    this.y    = initial ? Math.random() * -canvas.height : -20;
+    this.size = 4 + Math.random() * 8;
+    this.speed = 0.5 + Math.random() * 1.2;
+    this.drift = (Math.random() - 0.5) * 0.6;
+    this.angle = Math.random() * Math.PI * 2;
+    this.spin  = (Math.random() - 0.5) * 0.04;
+    this.alpha = 0.3 + Math.random() * 0.5;
+    var hue = Math.random() > 0.5 ? 350 : 40;
+    var sat = Math.random() > 0.5 ? '70%' : '60%';
+    this.color = 'hsla(' + hue + ',' + sat + ',70%,' + this.alpha + ')';
+  };
+  Petal.prototype.update = function() {
+    this.y     += this.speed;
+    this.x     += this.drift;
+    this.angle += this.spin;
+    if (this.y > canvas.height + 20) this.reset(false);
+  };
+  Petal.prototype.draw = function() {
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.angle);
+    ctx.globalAlpha = this.alpha;
+    ctx.fillStyle   = this.color;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, this.size, this.size * 0.5, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  };
 
-    setInterval(spawnHeart, 900);
-    for (var i = 0; i < 8; i++) { (function(idx) { setTimeout(spawnHeart, idx * 300); })(i); }
+  // Sparkle class
+  function Sparkle() { this.reset(); }
+  Sparkle.prototype.reset = function() {
+    this.x     = Math.random() * canvas.width;
+    this.y     = Math.random() * canvas.height;
+    this.size  = 1 + Math.random() * 2;
+    this.life  = 0;
+    this.maxLife = 60 + Math.random() * 120;
+    this.gold  = Math.random() > 0.4;
+  };
+  Sparkle.prototype.update = function() {
+    this.life++;
+    if (this.life > this.maxLife) this.reset();
+  };
+  Sparkle.prototype.draw = function() {
+    var progress = this.life / this.maxLife;
+    var alpha    = progress < 0.5 ? progress * 2 : (1 - progress) * 2;
+    ctx.save();
+    ctx.globalAlpha = alpha * 0.7;
+    ctx.fillStyle   = this.gold ? '#e8c06a' : '#ffffff';
+    ctx.shadowColor = this.gold ? '#c9952a' : '#aaaaff';
+    ctx.shadowBlur  = 6;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  };
 
-    // Sparkles
-    for (var j = 0; j < 30; j++) {
-      var s = document.createElement('div');
-      s.className = 'sparkle';
-      s.style.left   = (Math.random() * 100) + 'vw';
-      s.style.top    = (Math.random() * 100) + 'vh';
-      s.style.animationDelay    = (Math.random() * 3) + 's';
-      s.style.animationDuration = (2 + Math.random() * 3) + 's';
-      var size = (2 + Math.random() * 4) + 'px';
-      s.style.width = size; s.style.height = size;
-      document.body.appendChild(s);
-    }
-  </script>
+  // Init
+  var petals   = [];
+  var sparkles = [];
+  for (var i = 0; i < 40; i++)  petals.push(new Petal());
+  for (var j = 0; j < 60; j++)  sparkles.push(new Sparkle());
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    petals.forEach(function(p)   { p.update(); p.draw(); });
+    sparkles.forEach(function(s) { s.update(); s.draw(); });
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  // ========================================
+  //  RING CARD HOVER GLOW (mouse proximity)
+  // ========================================
+  document.querySelectorAll('.ring-card').forEach(function(card) {
+    card.addEventListener('mouseenter', function() {
+      card.style.transform = 'scale(1.06)';
+      card.style.transition = 'transform 0.3s ease';
+    });
+    card.addEventListener('mouseleave', function() {
+      card.style.transform = 'scale(1)';
+    });
+  });
+</script>
+
 </body>
 </html>
